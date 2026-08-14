@@ -1,0 +1,7 @@
+print("----- Receipt -----")
+print("Item\tPrice")
+print("Pen\t20")
+print("Notebook\t50")
+print("Pencil\t10")
+print("------------------")
+print("Total\t80")
