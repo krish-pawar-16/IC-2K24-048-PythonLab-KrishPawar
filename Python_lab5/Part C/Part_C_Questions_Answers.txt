@@ -1,0 +1,140 @@
+# Python Lab – Lab 5: Part C
+**Topic:** Python Dictionaries  
+**Subject:** Python Programming Lab  
+**Author:** Krish Pawar
+
+---
+
+### Q1. What is the difference between dictionary aliasing, shallow copying, and deep copying?
+
+**Answer:**
+
+- **Aliasing:** When two variables refer to the same dictionary, changes made through one variable are also visible through the other.
+
+- **Shallow Copy:** It creates a new dictionary, but nested objects are still shared between the original and copied dictionary.
+
+- **Deep Copy:** It creates a completely independent copy, including all nested objects.
+
+**Example:**
+
+```python
+import copy
+
+d1 = {"name": "Krish", "marks": [80, 90]}
+
+# Aliasing
+d2 = d1
+
+# Shallow copy
+d3 = d1.copy()
+
+# Deep copy
+d4 = copy.deepcopy(d1)
+
+d1["marks"].append(95)
+
+print(d2)
+print(d3)
+print(d4)
+```
+
+**Explanation:**  
+The change will be visible in `d2` and `d3` because they share the nested list with `d1`. It will not affect `d4` because deep copy creates independent nested objects.
+
+---
+
+### Q2. Why can a list or dictionary not be used as a dictionary key?
+
+**Answer:**
+
+Dictionary keys must be hashable, which means their hash value should remain constant.
+
+Lists and dictionaries are mutable, meaning their values can be changed after creation. Therefore, they cannot be used as dictionary keys.
+
+**Example:**
+
+```python
+# Valid dictionary
+student = {
+    "name": "Krish",
+    101: "MCA"
+}
+
+print(student)
+
+# Invalid dictionary key
+# data = {[1, 2]: "Python"}
+```
+
+**Explanation:**  
+Strings, integers and tuples containing hashable elements can be used as dictionary keys. Lists and dictionaries cannot be used as keys.
+
+---
+
+### Q3. What is the difference between using square brackets [] and the get() method to access dictionary values?
+
+**Answer:**
+
+Both methods are used to access values from a dictionary, but they behave differently when the key does not exist.
+
+- Using `[]` raises a `KeyError` if the key is missing.
+- Using `get()` returns `None` or a default value if the key is missing.
+
+**Example:**
+
+```python
+student = {
+    "name": "Krish",
+    "course": "MCA"
+}
+
+print(student["name"])
+
+print(student.get("age"))
+
+print(student.get("age", 20))
+```
+
+**Output:**
+
+```text
+Krish
+None
+20
+```
+
+**Explanation:**  
+The `get()` method is safer when we are not sure whether a key exists in the dictionary.
+
+---
+
+### Q4. What is the difference between the update() method and direct assignment in dictionaries?
+
+**Answer:**
+
+Direct assignment is used to add or change one key-value pair at a time. The `update()` method can add or modify multiple key-value pairs together.
+
+**Example:**
+
+```python
+student = {
+    "name": "Krish",
+    "course": "MCA"
+}
+
+# Direct assignment
+student["age"] = 20
+
+# Using update()
+student.update({
+    "city": "Indore",
+    "course": "Integrated MCA"
+})
+
+print(student)
+```
+
+**Output:**
+
+```text
+{'name

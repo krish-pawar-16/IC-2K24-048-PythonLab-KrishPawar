@@ -1,0 +1,253 @@
+# Part B: Predict the Output
+
+## Overview
+
+This part contains eight Python programs based on dictionary operations. Each question focuses on a different concept of dictionaries and helps in understanding how Python executes dictionary-based statements.
+
+The task is to predict the output of each program before executing it and understand the reason behind the result.
+
+## Q1. Dictionary Aliasing
+
+**Code:**
+
+```python
+d = {"a": 1, "b": 2}
+d2 = d
+d2["c"] = 3
+
+print(len(d))
+```
+
+**Output:**
+
+```text
+3
+```
+
+**Explanation:**
+
+Here, `d2 = d` does not create a separate dictionary. Both variables refer to the same dictionary in memory. When we add `"c": 3` using `d2`, the original dictionary also gets updated. Therefore, the length of `d` becomes 3.
+
+---
+
+## Q2. Shallow Copy
+
+**Code:**
+
+```python
+d = {"x": [1]}
+e = d.copy()
+
+e["x"].append(2)
+
+print(d)
+```
+
+**Output:**
+
+```text
+{'x': [1, 2]}
+```
+
+**Explanation:**
+
+The `copy()` method creates a shallow copy of the dictionary. It creates a new outer dictionary, but the nested list is still shared between both dictionaries. Therefore, appending 2 through `e` also changes the list accessed through `d`.
+
+---
+
+## Q3. Dictionary Comprehension with a Condition
+
+**Code:**
+
+```python
+print({
+    k: v
+    for k, v in zip("abc", range(3))
+    if v
+})
+```
+
+**Output:**
+
+```text
+{'b': 1, 'c': 2}
+```
+
+**Explanation:**
+
+The `zip()` function combines the letters and numbers into pairs:
+
+- a → 0
+- b → 1
+- c → 2
+
+The condition `if v` removes the pair where the value is 0 because zero is considered False in Python. The remaining pairs are stored in the new dictionary.
+
+---
+
+## Q4. Using setdefault()
+
+**Code:**
+
+```python
+d = {"a": 1}
+
+print(
+    d.setdefault("a", 9),
+    d.setdefault("b", 5),
+    d
+)
+```
+
+**Output:**
+
+```text
+1 5 {'a': 1, 'b': 5}
+```
+
+**Explanation:**
+
+The `setdefault()` method returns the existing value if the key is already present. Since `"a"` already exists, its value remains 1 instead of changing to 9.
+
+The key `"b"` does not exist, so Python adds it with the value 5. This is why the final dictionary contains both keys.
+
+---
+
+## Q5. Dictionary Keys That Have Equal Values
+
+**Code:**
+
+```python
+d = {
+    1: "a",
+    1.0: "b",
+    True: "c"
+}
+
+print(d, len(d))
+```
+
+**Output:**
+
+```text
+{1: 'c'} 1
+```
+
+**Explanation:**
+
+In Python, `1`, `1.0`, and `True` are considered equal when used as dictionary keys. They also have the same hash value.
+
+A dictionary cannot contain duplicate keys, so each new value replaces the previous value associated with that key. As a result, only one entry remains.
+
+---
+
+## Q6. Deleting an Item While Iterating
+
+**Code:**
+
+```python
+d = {"a": 1, "b": 2, "c": 3}
+
+for k in d:
+    if d[k] == 2:
+        del d[k]
+```
+
+**Result:**
+
+```text
+RuntimeError: dictionary changed size during iteration
+```
+
+**Explanation:**
+
+The program tries to delete an element while directly iterating over the same dictionary. This changes the size of the dictionary during iteration and causes a `RuntimeError`.
+
+**Corrected Code:**
+
+```python
+d = {"a": 1, "b": 2, "c": 3}
+
+for k in list(d):
+    if d[k] == 2:
+        del d[k]
+
+print(d)
+```
+
+**Output:**
+
+```text
+{'a': 1, 'c': 3}
+```
+
+**Explanation:**
+
+Using `list(d)` creates a separate list of dictionary keys. The loop iterates over this list instead of the original dictionary. Therefore, deleting an entry does not interfere with the iteration.
+
+---
+
+## Q7. Using pop() and popitem()
+
+**Code:**
+
+```python
+d = {"a": 1, "b": 2}
+
+print(d.pop("z", None), d.popitem())
+```
+
+**Output:**
+
+```text
+None ('b', 2)
+```
+
+**Explanation:**
+
+The `pop()` method removes a specified key and returns its value. Since `"z"` does not exist, the default value `None` is returned without raising an error.
+
+The `popitem()` method removes and returns the last inserted key-value pair. Here, it removes `("b", 2)`.
+
+---
+
+## Q8. Reversing Keys and Values
+
+**Code:**
+
+```python
+print({
+    v: k
+    for k, v in {"a": 1, "b": 1}.items()
+})
+```
+
+**Output:**
+
+```text
+{1: 'b'}
+```
+
+**Explanation:**
+
+The dictionary comprehension exchanges the positions of keys and values.
+
+Both `"a"` and `"b"` have the same value, 1. When the comprehension tries to use 1 as a key for the second time, the previous value is replaced by `"b"`.
+
+Therefore, the final dictionary contains only one entry.
+
+---
+
+## Conclusion
+
+After completing these questions, I understood different behaviours of Python dictionaries, including aliasing, shallow copying, dictionary comprehensions, and commonly used dictionary methods.
+
+These examples also helped me understand why dictionary keys must be unique, how missing keys are handled, and why modifying a dictionary while iterating over it can cause errors.
+
+The questions provided practical examples of dictionary operations and improved my understanding of how Python handles data internally.
+
+**Author:** Ishaan Sharma
+
+**Subject:** Python Programming Lab
+
+**Topic:** Dictionaries — Part B: Predict the Output
